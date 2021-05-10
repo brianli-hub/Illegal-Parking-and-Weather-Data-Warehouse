@@ -1,0 +1,13 @@
+my-bigquery-db:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: jwt
+      project: cis4400
+      dataset: cis4400
+      threads: [1 or more]
+      timeout_seconds: 300
+      location: US
+      priority: interactive
+      retries: 1

@@ -1,0 +1,26 @@
+version: 2
+
+sources: 
+    - name: CIS4400_Project
+      description: A clone of a Postgres application database.
+      database: focused-history-305115
+      tables:
+        - name: agency
+          description: Raw agency data.
+          columns: 
+            - name: agency_dim_id
+              description: The primary key for agency
+              tests:
+                - unique
+                - not_null
+        - name: complaint
+          description: Raw complaint data.
+          columns:
+            - name: complaint_dim_id
+              description: The primary key for complaint
+              tests:
+                - unique
+                - not_null
+        - name: descriptor
+        - name: complaint_location
+        - name: weather_location

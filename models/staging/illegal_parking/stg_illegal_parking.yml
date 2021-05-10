@@ -1,0 +1,51 @@
+version: 2
+ 
+models:
+    - name: stg_complaint
+      description: Staged complaint data from our illegal parking data
+      columns:
+        - name: complaint_dim_id
+          description: The primary key for complaint
+          tests:
+            - unique
+            - not_null
+        - name: descriptor
+          description: "{{ doc('descriptor_identifier')}}"
+          tests:
+            - accepted_values:
+                values: ['Blocked Hydrant', 'Blocked Sidewalk', 'Detached Trailer', 'Blocked Bike Lane', 'Unauthorized Bus Layover', 'Parking Permit Improper Use', 'Commercial Overnight Parking', 'Overnight Commercial Storage', 'Posted Parking Sign Violation', 'Double Parked Blocking Traffic', 'Double Parked Blocking Vehicle']
+ 
+    - name: stg_agency
+      description: Staged agency data from our illegal parking data
+      columns:
+        - name: agency_dim_id
+          description: The primary key for agency
+          tests:
+            - unique
+            - not_null
+ 
+    - name: stg_complaint_location
+      description: Staged complaint location data from our illegal parking data
+      columns:
+        - name: c_location_dim_id
+          description: The primary key for complaint location
+          tests:
+            - unique
+            - not null
+        - name: city
+          test:
+            - unique
+            - not_null
+        - name: ZipCode
+          tests:
+            - unique
+            - not_null
+    
+    - name: stg_weather_location
+      description: Staged complaint location data from our illegal parking data
+      columns:
+        - name: w_location_dim_id
+          description: The primary key for weather location
+          tests:
+            - unique
+            - not null

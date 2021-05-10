@@ -1,0 +1,45 @@
+with complaint_dim as (
+    select 
+    {{ ref('stg_complaint')}},
+    {{ ref('stg_complaint_location')}},
+    {{ ref('stg_date_complaint')}},
+    {{ ref('stg_agency')}}
+)
+
+select *
+from complaint_dim
+
+with final as (
+    select
+        agency.agency_dim_id,
+        complaint.complaint_dim_id,
+        complaint_location.c_location_dim_id,
+        stg_date_complaint.date_dim_id,
+    from complaint_dim
+)
+select * from final
+
+-------------------
+with agency as (
+    select * from {{ ref('stg_agency')}}
+),
+complaint as (
+    select * from {{ ref('stg_complaint')}}
+),
+complaint_location as (
+    select * from {{ ref('stg_complaint_location')}}
+),
+date_complaint as (
+    select date_dim_id from {{ ref('date_complaint')}}
+),
+
+final as (
+    select
+        agency.agency_dim_id,
+        complaint.complaint_dim_id,
+        complaint_location.c_location_dim_id,
+        coalesce(complaint.number_of_complaint, 0) as number_of_complaints,
+    from stg_complaint
+    left join complaint_dim_id using unique_key
+)
+select * from final
